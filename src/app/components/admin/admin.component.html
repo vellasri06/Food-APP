@@ -1,0 +1,27 @@
+<body>
+
+<form class="bo">
+
+    Name:
+    <input type="text" [(ngModel)]="username" name="username"><br>
+
+    <div class="pass-box">
+
+        Password:
+
+        <input [type]="flag ? 'text' : 'password'" [(ngModel)]="password" name="password">
+
+        <button
+            type="button"
+            class="eye"
+            (click)="flag = !flag"
+        >
+            <img src="https://img.icons8.com/?size=100&id=60022&format=png&color=000000">
+        </button>
+
+    </div>
+    <button class="login" (click)="login()">Login</button>
+    <p *ngIf="error" style="color: red;">Login Failed</p>
+</form>
+
+</body>

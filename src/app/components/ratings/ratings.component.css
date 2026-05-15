@@ -1,0 +1,195 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Segoe UI;
+}
+
+
+body {
+
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    background: url("https://img.freepik.com/free-photo/vegetables-wooden-table_181624-119.jpg?semt=ais_hybrid&w=740&q=80");
+
+    background-size: cover;
+    background-position: center;
+
+}
+
+
+/* header */
+
+header {
+
+    width: 100%;
+
+    background: olive;
+
+    color: white;
+
+    text-align: center;
+
+    padding: 15px;
+
+    font-size: 24px;
+
+    font-weight: bold;
+
+    box-shadow: 0 3px 10px black;
+
+}
+
+
+/* container */
+
+.rating-container {
+
+    margin-top: 40px;
+
+    background: rgba(255, 255, 255, 0.95);
+
+    padding: 25px;
+
+    border-radius: 12px;
+
+    width: 400px;
+
+    box-shadow: 0 10px 25px black;
+
+    animation: fade 0.4s;
+
+}
+
+
+@keyframes fade {
+
+    from {
+        opacity: 0;
+        transform: translateY(20px)
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0)
+    }
+
+}
+
+
+/* stars */
+
+.stars {
+
+    display: flex;
+    justify-content: center;
+
+    font-size: 35px;
+
+    gap: 10px;
+
+    margin: 15px 0;
+
+}
+
+.stars span {
+
+    cursor: pointer;
+
+    color: #ccc;
+
+    transition: 0.3s;
+
+}
+
+.stars span:hover {
+
+    color: gold;
+
+    transform: scale(1.2);
+
+}
+
+
+/* message */
+
+.feedback-message {
+
+    text-align: center;
+
+    font-weight: bold;
+
+    margin: 10px;
+
+    color: #444;
+
+}
+
+
+/* textarea */
+
+textarea {
+
+    width: 100%;
+
+    padding: 10px;
+
+    border-radius: 8px;
+
+    border: 1px solid;
+
+    margin-top: 10px;
+
+}
+
+
+/* buttons */
+
+.submit-btn {
+
+    margin-top: 15px;
+
+    width: 100%;
+
+    padding: 10px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background:olivedrab;
+
+    color: white;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+
+}
+
+.submit-btn:hover {
+
+    background:olivedrab;
+
+    transform: scale(1.05);
+
+}
+
+
+.home {
+
+    background: #1e88e5;
+
+}
+
+.home:hover {
+
+    background: #1565c0;
+
+}

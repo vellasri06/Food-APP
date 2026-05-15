@@ -1,0 +1,139 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+
+    background-image: url("https://images.creativemarket.com/0.1.0/ps/4233492/1820/1213/m1/fpnw/wm1/dwnw2ridtczr0abkng6ovsikyhiivkbqnuhx8f5nau3vgz2a3zngpuzlsjatt6cc-.jpg?1522764558&s=ee7d097bf4023b13e6138c05d4723f17");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* main box */
+
+.container {
+
+    width: 550px;
+
+    background: rgba(255,255,255,0.9);
+
+    padding: 20px;
+
+    border-radius: 10px;
+
+    box-shadow: 0 0 10px black;
+
+}
+.itemName{
+    flex:1;
+    font-weight: bold;;
+}
+
+/* heading */
+
+h1 {
+    color: #333;
+    text-align: center;
+}
+
+
+/* list */
+
+#cartItems {
+    list-style: none;
+    padding: 0;
+}
+
+
+#cartItems li {
+
+    margin: 6px 0;
+
+    padding:8px;
+
+    border-radius: 5px;
+
+    background:#f3f2f2;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap:8px
+
+}
+
+
+/* total */
+
+#totalCost {
+
+    font-weight: bold;
+
+    margin-top: 15px;
+
+    text-align: center;
+
+    font-size: 18px;
+
+}
+
+.countBox{
+margin-left:10px;
+display: flex;
+align-items: center;
+gap: 5px;
+}
+
+.countBox button{
+width:25px;
+height:25px;
+padding: 0;
+font-weight: bold;
+}
+/* button */
+
+button {
+
+    padding: 8px 12px;
+
+    background-color: #28a745;
+
+    color: white;
+
+    border: none;
+
+    border-radius: 5px;
+
+    cursor: pointer;
+
+    margin-top: 10px;
+    gap:20px;
+    margin-left: 70px;
+
+}
+
+
+button:hover {
+    background-color: #218838;
+}
+.remo{
+
+background:red;
+
+padding:5px 8px;
+
+}
+
+.remo:hover{
+
+background:darkred;
+
+}

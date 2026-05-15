@@ -1,0 +1,52 @@
+<body>
+
+<header>
+    <h1>Queue Management</h1>
+</header>
+
+<section class="queue-info">
+
+    <p>
+        Current queue position:
+        <strong>{{activeOrders().length}}</strong>
+    </p>
+
+</section>
+
+
+<button (click)="back()" class="back">
+    Back to Home
+</button>
+
+<button (click)="refresh()" class="refresh-btn">
+    Refresh 🔄
+</button>
+
+<br>
+
+
+<div *ngFor="let o of activeOrders(); let i = index" class="orderBox">
+
+    <h3>Order No: {{o.orderno}}</h3>
+
+    <p>Queue Position: {{i+1}}</p>
+
+    <div *ngFor="let it of o.items">
+        {{it.name}} - ₹{{it.price}}
+    </div>
+
+    <p>Meal: {{o.preferences?.meal}}</p>
+
+    <p *ngFor="let f of o.preferences?.flavors">
+        {{f}}
+    </p>
+
+    <p>Status: {{o.status}}</p>
+
+    <p class="total">
+        Total: {{o.total}}
+    </p>
+
+</div>
+
+</body>

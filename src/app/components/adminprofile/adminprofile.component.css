@@ -1,0 +1,262 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+
+/* background */
+
+body{
+
+    min-height:100vh;
+
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+
+    padding:20px;
+
+    background: linear-gradient(135deg,#667eea,#764ba2);
+
+}
+
+
+/* main box */
+
+.box{
+
+    width:950px;
+
+    background:white;
+
+    padding:20px;
+
+    border-radius:12px;
+
+    box-shadow:0 10px 25px rgba(0,0,0,0.3);
+
+    animation:fade 0.4s ease;
+
+}
+
+
+/* animation */
+
+@keyframes fade{
+
+    from{
+        opacity:0;
+        transform:translateY(20px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+}
+
+
+/* title */
+
+h2{
+
+    text-align:center;
+
+    margin-bottom:15px;
+
+    color:#333;
+
+}
+
+
+h3{
+
+    margin-top:15px;
+
+    margin-bottom:5px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    color:#444;
+
+}
+
+
+/* buttons */
+
+button{
+
+    padding:6px 12px;
+
+    border:none;
+
+    border-radius:6px;
+
+    cursor:pointer;
+
+    background:#ff5a00;
+
+    color:white;
+
+    transition:0.3s;
+
+}
+
+button:hover{
+
+    background:#e14d00;
+
+    transform:scale(1.05);
+
+}
+
+
+/* remove button */
+
+h3 button{
+
+    background:#e53935;
+
+}
+
+h3 button:hover{
+
+    background:#c62828;
+
+}
+
+
+/* table */
+
+table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    margin-bottom:15px;
+
+    overflow:hidden;
+
+    border-radius:8px;
+
+}
+
+
+/* header */
+
+th{
+
+    background:#1e88e5;
+
+    color:white;
+
+    padding:10px;
+
+}
+
+
+/* cells */
+
+td{
+
+    padding:8px;
+
+    border-bottom:1px solid #ddd;
+
+    text-align:center;
+
+}
+
+
+/* row hover */
+
+tr:hover{
+
+    background:#f3f3f3;
+
+    transition:0.3s;
+
+}
+
+
+/* select */
+
+select{
+
+    padding:5px 8px;
+
+    border-radius:6px;
+
+    border:none;
+
+    color:white;
+
+    font-weight:bold;
+
+}
+
+
+/* status colors */
+
+select option{
+    color:black;
+}
+
+
+/* preparing */
+
+select{
+    background:#fbc02d;
+}
+
+
+/* cooking */
+
+select:has(option:checked[value="Cooking"]),
+select:has(option:checked){
+}
+
+
+/* manual colors using ngModel value */
+
+select.ng-dirty{
+
+    background:#fbc02d;
+
+}
+
+
+/* better color using attribute */
+
+select[value="Preparing"]{
+    background:#fbc02d;
+}
+
+select[value="Cooking"]{
+    background:#fb8c00;
+}
+
+select[value="Ready"]{
+    background:#1e88e5;
+}
+
+select[value="Completed"]{
+    background:#43a047;
+}
+
+
+/* smooth effect */
+
+td, th{
+
+    transition:0.3s;
+
+}

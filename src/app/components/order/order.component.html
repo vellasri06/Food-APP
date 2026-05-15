@@ -1,0 +1,68 @@
+<div class="container">
+
+  <h1>Your Order</h1>
+
+  <ul class="cart-items">
+    <li *ngFor="let i of cs.cart">
+      {{i.name}} - ₹{{i.price}}
+    </li>
+  </ul>
+
+ <h3>Order Type: </h3>
+ <p>{{cs.orderType}}</p>
+  <h3>Preferences</h3>
+
+  <p>Meal: {{cs.preferences.meal}}</p>
+
+  <p *ngFor="let f of cs.preferences.flavors">
+    {{f}}
+  </p>
+
+
+  <h3>Order Details</h3>
+
+  <p>Order No: {{cs.orderno}}</p>
+
+  <li *ngFor="let i of cs.cart">
+    {{i.name}} - ₹{{i.price}}
+  </li>
+
+
+  <div class="total">
+    Total: ₹{{total}}
+  </div>
+
+
+  <div class="options">
+
+    <button class="btn pickup-btn" (click)="selectOption(false)">
+      Dining
+    </button>
+
+    <button class="btn delivery-btn" (click)="selectOption(true)">
+      Parcel (+10)
+    </button>
+
+    <br><br>
+
+    <button class="btn delivery-btn" (click)="check()">
+      Checkout
+    </button>
+    <button class="btn delivery-btn" (click)="back()">
+      Back
+    </button>
+    <button class="btn delivery-btn" (click)="home()">
+      Home
+    </button>
+<p>Total: ₹{{total}}</p>
+<p *ngIf="cs.appliedOffer">
+Offer: {{cs.appliedOffer.code}}
+</p>
+<p *ngIf="cs.appliedOffer">
+Discount: -₹{{cs.appliedOffer.discount}}
+</p>
+
+<h3>Final: ₹{{finalTotal}}</h3>
+  </div>
+
+</div>

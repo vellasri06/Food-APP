@@ -1,0 +1,14 @@
+<body>
+
+    <div class="container">
+        <h2>Pay with QR Code</h2>
+        <h3>Total: {{cs.lastotal}}</h3>
+        <div id="qr-code" onclick="scanQRCode()">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQB2bCEySU8ltuR5a6ruGpv_jjaNAk--E4JYQ&s" alt="QR Code">
+        </div>
+        <p class="instructions">Scan this QR code to proceed with the payment.</p><br>
+        <button (click)="done()">Done</button>
+        <button (click)="back()">Back</button>
+        <button (click)="home()">Home</button>
+    </div>
+</body>

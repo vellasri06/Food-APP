@@ -1,0 +1,54 @@
+<body>
+  <div class="container">
+
+    <h1>Your Cart</h1>
+
+    <div id="orderNumber">
+      Order No: {{cs.orderno}}
+    </div>
+
+    <ul id="cartItems">
+
+      <li *ngFor="let i of cs.cart; let p=index">
+        <span class="itemName">
+
+          {{i.name}} - ₹{{i.price}}
+        </span>
+
+        <button class="remo" (click)="remove(p)">
+          Remove
+        </button>
+
+        <span class="countBox">
+
+          ( {{i.qty}} )
+
+        </span>
+
+      </li>
+
+    </ul>
+
+    <div id="totalCost">
+      Total: ₹{{cs.total}}
+    </div>
+
+    <button (click)="saveCart()">
+      Proceed to Checkout
+    </button>
+    <button (click)="back()">
+      Back
+    </button>
+    <button (click)="home()">
+      Home
+    </button>
+    <p *ngIf="cs.appliedOffer">
+
+      Offer:
+      {{cs.appliedOffer.code}}
+
+      - ₹{{cs.appliedOffer.discount}}
+
+    </p>
+  </div>
+</body>

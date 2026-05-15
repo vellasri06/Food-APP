@@ -1,0 +1,224 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+body {
+
+   background: url("https://img.freepik.com/free-photo/top-view-bowl-with-lentils-variety-condiments_1220-423.jpg?semt=ais_hybrid&w=740&q=80");
+
+   background-size: cover;
+   background-repeat: no-repeat;
+   background-position: center;
+
+   min-height: 100vh;
+
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+
+}
+
+
+/* HEADER */
+
+header {
+
+    width: 100%;
+    padding: 18px;
+
+    text-align: center;
+
+    font-size: 26px;
+    font-weight: bold;
+
+    color: white;
+
+    backdrop-filter: blur(8px);
+    background: rgba(0,0,0,0.5);
+
+    letter-spacing: 2px;
+
+    animation: topFade 0.7s ease;
+
+}
+
+@keyframes topFade {
+
+    from {opacity:0; transform:translateY(-20px)}
+    to {opacity:1; transform:translateY(0)}
+
+}
+
+
+
+/* QUEUE BOX */
+
+.queue-info {
+
+    margin-top: 25px;
+
+    padding: 20px;
+
+    width: 340px;
+
+    color: white;
+
+    border-radius: 15px;
+
+    backdrop-filter: blur(10px);
+
+    background: rgba(0,0,0,0.55);
+
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+
+    text-align: center;
+
+    font-size: 18px;
+
+    animation: fadeIn 0.8s ease;
+
+}
+
+
+@keyframes fadeIn {
+
+    from {opacity:0; transform:scale(.9)}
+    to {opacity:1; transform:scale(1)}
+
+}
+
+
+
+/* BUTTONS */
+
+.back,
+.refresh-btn {
+
+    margin-top: 12px;
+
+    padding: 10px 18px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    color: white;
+
+    background: linear-gradient(45deg,#ff512f,#dd2476);
+
+    transition: 0.3s;
+
+}
+
+
+.back:hover,
+.refresh-btn:hover {
+
+    transform: scale(1.05);
+
+    box-shadow: 0 5px 15px black;
+
+}
+
+
+
+/* ORDER BOX */
+
+.orderBox {
+
+    margin-top: 20px;
+
+    width: 340px;
+
+    padding: 15px;
+
+    border-radius: 15px;
+
+    color: white;
+
+    backdrop-filter: blur(12px);
+
+    background: rgba(0,0,0,0.6);
+
+    box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+
+    animation: slideUp 0.5s ease;
+
+    transition: 0.3s;
+
+}
+
+
+.orderBox:hover {
+
+    transform: translateY(-5px) scale(1.02);
+
+}
+
+
+@keyframes slideUp {
+
+    from {
+        opacity:0;
+        transform:translateY(20px);
+    }
+
+    to {
+        opacity:1;
+        transform:translateY(0);
+    }
+
+}
+
+
+
+/* ORDER TITLE */
+
+.orderBox h3 {
+
+    text-align: center;
+
+    margin-bottom: 10px;
+
+    color: #ffd54f;
+
+}
+
+
+
+/* ITEMS */
+
+.orderBox div {
+
+    padding: 4px;
+
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+
+}
+
+
+
+/* TOTAL */
+
+.total {
+
+    font-weight: bold;
+
+    margin-top: 10px;
+
+    text-align: center;
+
+    font-size: 18px;
+
+    color: #4caf50;
+
+}

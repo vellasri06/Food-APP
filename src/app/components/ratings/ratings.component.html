@@ -1,0 +1,50 @@
+<body>
+
+    <header>
+        <h1>Rate Your Experience ⭐</h1>
+    </header>
+
+    <div class="rating-container">
+
+        <form>
+
+            <h2>How was your experience with us?</h2>
+
+            <div class="stars">
+
+                <span (click)="rate(1)">★</span>
+                <span (click)="rate(2)">★</span>
+                <span (click)="rate(3)">★</span>
+                <span (click)="rate(4)">★</span>
+                <span (click)="rate(5)">★</span>
+
+            </div>
+
+            <div class="feedback-message">
+                {{message}}
+            </div>
+
+
+            <div class="comments">
+
+                <label>Leave a comment:</label>
+
+                <textarea [(ngModel)]="comment" name="comment" placeholder="Share your feedback..."></textarea>
+
+            </div>
+
+
+            <button type="button" class="submit-btn" (click)="submit()">
+                Submit Feedback
+            </button>
+
+
+            <button type="button" class="submit-btn home" (click)="home()">
+                Home
+            </button>
+
+        </form>
+
+    </div>
+
+</body>

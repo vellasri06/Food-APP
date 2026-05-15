@@ -1,0 +1,75 @@
+<div class="register-container">
+
+    <form class="register-form" #f="ngForm">
+
+        <h1>Foodie Signup 🍕</h1>
+
+        <div class="row">
+
+            <input type="text" class="input" placeholder="First Name" [(ngModel)]="firstname" name="firstname" required>
+
+            <small *ngIf="showError && !firstname">
+                First Name required
+            </small>
+
+
+            <input type="text" class="input" placeholder="Last Name" [(ngModel)]="lastname" name="lastname" required>
+
+            <small *ngIf="showError && !lastname">
+                Last Name required
+            </small>
+
+        </div>
+
+
+        <input type="email" class="input" placeholder="Email" [(ngModel)]="email" name="email" required>
+
+        <small *ngIf="showError && !email">
+            Email required
+        </small>
+
+
+        <input type="text" class="input" placeholder="Mobile" [(ngModel)]="mobile" name="mobile">
+
+
+        <input type="text" class="input" placeholder="Location" [(ngModel)]="location" name="location">
+
+
+        <input type="password" class="input" placeholder="Password" [(ngModel)]="password" name="password" required>
+
+        <small *ngIf="showError && !password">
+            Password required
+        </small>
+
+        <small *ngIf="passError">
+            Password must be 8 characters
+        </small>
+
+
+        <input type="password" class="input" placeholder="Confirm" [(ngModel)]="confirm" name="confirm" required>
+
+        <small *ngIf="matchError">
+            Password not matching
+        </small>
+
+
+        <div class="terms">
+            <input type="checkbox"> I agree
+        </div>
+
+
+        <button type="button" class="btn" (click)="reg()">
+
+            Register
+
+        </button>
+
+
+        <p class="login-text">
+            Already have account?
+            <span (click)="login()">Login</span>
+        </p>
+
+    </form>
+
+</div>

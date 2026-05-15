@@ -1,0 +1,22 @@
+<div class="box">
+
+<h2>Offers & Coupons</h2>
+
+<div class="offer" *ngFor="let o of cs.offers">
+
+<p>{{o.code}} - ₹{{o.discount}} OFF</p>
+
+</div>
+
+
+<input
+placeholder="Enter code"
+[(ngModel)]="code">
+
+<button (click)="apply()">
+Apply
+</button>
+
+<p>{{message}}</p>
+
+</div>

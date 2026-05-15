@@ -1,0 +1,40 @@
+<body>
+
+<div class="container">
+    <h2>Set Your Preferences</h2>
+
+
+    <div class="form-group">
+
+        <label>Flavor Preferences</label>
+
+        <div class="checkbox-group">
+            <input type="checkbox" (change)="toggleFlavor('Extra Sauce',$event)">
+            <label>Extra Sauce</label>
+        </div>
+
+        <div class="checkbox-group">
+            <input type="checkbox" (change)="toggleFlavor('Extra Spicy',$event)">
+            <label>Extra Spicy</label>
+        </div>
+
+        <div class="checkbox-group">
+            <input type="checkbox" (change)="toggleFlavor('Extra Onions',$event)">
+            <label>Extra Onions</label>
+        </div>
+
+        <div class="checkbox-group">
+            <input type="checkbox" (change)="toggleFlavor('Low Spicy',$event)">
+            <label>Low Spicy</label>
+        </div>
+
+    </div>
+
+
+    <button (click)="save()">Save Preferences</button>
+    <button (click)="back()">Back</button>
+    <button (click)="home()">Home</button>
+
+</div>
+
+</body>

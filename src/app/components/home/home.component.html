@@ -1,0 +1,83 @@
+<body>
+<header>
+  <h1>Smart Canteen</h1>
+  <p>A Smarter Way to Dine</p>
+</header>
+
+<!-- HERO (same as yours) -->
+<div class="hero">
+  <div class="image-carousel">
+    <img *ngFor="let img of images" [src]="img">
+  </div>
+</div>
+
+<!-- NAVBAR (same links, improved style via CSS) -->
+<nav class="navbar">
+  <ul>
+    <li><a routerLink="/menu">Menu</a></li>
+    <li><a routerLink="/preference">Preferences</a></li>
+    <li><a routerLink="/payment">QR Payment</a></li>
+    <li><a routerLink="/queue">Queue</a></li>
+    <li><a routerLink="/specials">Specials</a></li>
+    <li><a routerLink="/ratings">Feedback</a></li>
+    <li><a routerLink="/nutrition">Nutrition</a></li>
+    <li><a routerLink="/cart">Cart</a></li>
+    <li><a routerLink="/order">Order</a></li>
+    <li><a routerLink="/admin">Admin</a></li>
+    <li><a routerLink="/offers">Offers</a></li>
+    <li><a routerLink="/profile">Profile</a></li>
+    <li><a routerLink="/history">History</a></li>
+  </ul>
+</nav>
+
+<main class="container">
+
+  <!-- SEARCH -->
+  <section class="searchBox">
+    <input
+      class="searchInput"
+      placeholder="Search Biryani, Meals, Snacks..."
+      [(ngModel)]="searchText">
+  </section>
+
+  <!-- CATEGORIES -->
+  <section>
+    <h2>Popular Categories</h2>
+
+    <div class="categories">
+      <div class="cat" routerLink="/menu">🍛 Biryani</div>
+      <div class="cat" routerLink="/menu">🍕 Pizza</div>
+      <div class="cat" routerLink="/menu">🍱 Meals</div>
+      <div class="cat" routerLink="/menu">🍟 Snacks</div>
+      <div class="cat" routerLink="/menu">🥤 Drinks</div>
+    </div>
+  </section>
+  <section>
+    <h2>Today's Offers</h2>
+
+    <div class="offers">
+      <div class="offer">🔥 50% OFF</div>
+      <div class="offer">🎁 Combo Offer</div>
+      <div class="offer">🥤 Free Drink</div>
+    </div>
+  </section>
+  <section>
+    <h2>Quick Actions</h2>
+    <div class="quick">
+      <button routerLink="/menu">Order Now</button>
+      <button routerLink="/cart">Cart</button>
+      <button routerLink="/queue">Queue</button>
+      <button routerLink="/payment">Pay</button>
+    </div>
+  </section>
+  <section>
+    <h2>Your Order Status</h2>
+
+    <div class="statusBox">
+      <p><strong>Status:</strong> Preparing</p>
+      <p><strong>Queue Position:</strong> 2</p>
+    </div>
+  </section>
+
+</main>
+</body>

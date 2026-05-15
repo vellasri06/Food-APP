@@ -1,0 +1,247 @@
+/* Page Background */
+.history {
+  padding: 30px;
+  min-height: 100vh;
+  background: linear-gradient(to right, #eef2f3, #dfe9f3);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Title */
+.history h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #333;
+  font-size: 28px;
+}
+
+/* Table Container */
+.history table {
+  width: 100%;
+  max-width: 900px;
+  margin: auto;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+/* Header */
+.history th {
+  background: #4CAF50;
+  color: white;
+  padding: 15px;
+  text-align: center;
+  font-size: 16px;
+}
+
+/* Rows */
+.history td {
+  padding: 14px;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+  font-size: 15px;
+}
+
+/* Hover Effect */
+.history tr:hover {
+  background-color: #f5f5f5;
+  transition: 0.3s;
+}
+
+/* Last row border remove */
+.history tr:last-child td {
+  border-bottom: none;
+}
+
+/* Status Styling */
+.status {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: bold;
+  display: inline-block;
+}
+
+/* Different status colors */
+.status.Cooking {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.status.Delivered {
+  background: #d4edda;
+  color: #155724;
+}
+
+.status.Cancelled {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+/* Total row */
+.total-row td {
+  font-weight: bold;
+  background: #fafafa;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .history table {
+    font-size: 12px;
+  }
+
+  .history th, .history td {
+    padding: 10px;
+  }
+}
+/* Layout */
+.container {
+  padding: 20px;
+  max-width: 1100px;
+  margin: auto;
+}
+
+/* Header */
+header {
+  text-align: center;
+  padding: 25px;
+  background: linear-gradient(135deg, #ff6b6b, #ff8e53);
+  color: white;
+  border-radius: 10px;
+  margin: 15px;
+}
+
+/* Hero */
+.hero {
+  margin: 15px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.image-carousel {
+  display: flex;
+  animation: scroll 20s linear infinite;
+}
+
+.image-carousel img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  margin-right: 10px;
+  border-radius: 10px;
+}
+
+@keyframes scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
+/* Navbar */
+.navbar {
+  background: #333;
+  margin: 15px;
+  border-radius: 10px;
+}
+
+.navbar ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 10px;
+}
+
+.navbar li {
+  margin: 5px 10px;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+/* Sections */
+section {
+  margin: 25px 0;
+}
+
+h2 {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+/* Search */
+.searchInput {
+  width: 100%;
+  padding: 12px;
+  border-radius: 25px;
+  border: 1px solid #ccc;
+  outline: none;
+}
+
+/* Categories */
+.categories {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.cat {
+  padding: 10px 15px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.cat:hover {
+  background: #ff6b6b;
+  color: white;
+}
+
+/* Offers */
+.offers {
+  display: flex;
+  gap: 10px;
+}
+
+.offer {
+  flex: 1;
+  padding: 15px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+  color: #333;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Quick Buttons */
+.quick {
+  display: flex;
+  gap: 10px;
+}
+
+.quick button {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: #4CAF50;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.quick button:hover {
+  background: #388e3c;
+}
+
+/* Status */
+.statusBox {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}

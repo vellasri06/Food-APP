@@ -1,0 +1,131 @@
+
+<div class="box">
+
+  <button (click)="logout()">Logout</button>
+
+  <h2>Order Details</h2>
+
+  <div *ngIf="groupedOrders | keyvalue as orders; else noOrders">
+
+    <div *ngFor="let o of orders">
+
+      <h3>
+        Order No: {{o.key}}
+
+        <button (click)="remove(+o.key)">
+          Remove Order
+        </button>
+      </h3>
+
+      <table border="1" cellpadding="8">
+
+        <tr>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Status</th>
+          <th>OrderType</th>
+        </tr>
+
+        <tr *ngFor="let item of o.value">
+
+          <td>{{item.name}}</td>
+          <td>₹{{item.price}}</td>
+
+          <td>
+            <select [(ngModel)]="item.status" (change)="updateStatus(item)">
+              <option>Preparing</option>
+              <option>Cooking</option>
+              <option>Ready</option>
+              <option>Completed</option>
+            </select>
+          </td>
+
+          <td>{{item.orderType}}</td>
+
+        </tr>
+
+      </table>
+
+    </div>
+
+  </div>
+
+  <ng-template #noOrders>
+    <p>No Orders Found 🚫</p>
+  </ng-template>
+
+  <hr>
+
+  <!-- ================= MENU ================= -->
+
+  <h2>🍔 Menu Management</h2>
+
+  <input placeholder="Name" [(ngModel)]="newItem.name">
+  <input placeholder="Price" [(ngModel)]="newItem.price">
+  <input placeholder="Category" [(ngModel)]="newItem.category">
+  <input placeholder="Image URL" [(ngModel)]="newItem.img">
+
+  <button (click)="addItem()">Add Item</button>
+
+  <hr>
+
+  <div *ngFor="let item of menuItems">
+
+    <div style="border:1px solid #ccc; padding:10px; margin-bottom:10px">
+
+      <b>{{item.name}}</b> - ₹{{item.price}} ({{item.category}})
+
+      <button (click)="deleteItem(item.id, $event)">
+        Delete
+      </button>
+
+      <h4>Options</h4>
+
+      <input placeholder="Option Name" [(ngModel)]="optionName">
+      <input placeholder="Price" [(ngModel)]="optionPrice">
+      <input placeholder="Image URL" [(ngModel)]="optionImg">
+      <input placeholder="Type" [(ngModel)]="optionType">
+      <input placeholder="Stock" type="number" [(ngModel)]="newItem.stock">
+
+      <button (click)="addOptionToItem(item)">
+        Add Option
+      </button>
+
+      <div *ngFor="let opt of item.options">
+
+        <p>
+          {{opt.name}} - ₹{{opt.price}}
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+  <hr>
+
+<h2>⭐ Customer Feedback</h2>
+
+<div *ngIf="feedbacks.length; else noFeedback">
+
+  <div *ngFor="let f of feedbacks;let i=index" style="border:1px solid #ccc; padding:10px; margin:10px 0">
+
+    <p><b>Rating:</b> ⭐ {{f.rating}}</p>
+
+    <p><b>Message:</b> {{f.message}}</p>
+
+    <p><b>Comment:</b> {{f.comment}}</p>
+
+    <p><b>Date:</b> {{f.date | date:'short'}}</p>
+      <button (click)="deleteFeedback(i)">
+    Delete
+      </button>
+
+  </div>
+</div>
+
+<ng-template #noFeedback>
+  <p>No feedback yet 🚫</p>
+</ng-template>
+
+</div>

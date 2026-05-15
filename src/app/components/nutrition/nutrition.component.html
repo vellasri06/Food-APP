@@ -1,0 +1,46 @@
+<div class="container">
+
+<h1>Nutrition Information</h1>
+
+<div class="menu-item"
+(click)="show('Shawarma',250,10,12,20)">
+Shawarma
+</div>
+
+<div class="menu-item"
+(click)="show('Biryani',400,15,18,45)">
+Biryani
+</div>
+
+<div class="menu-item"
+(click)="show('Pizza',300,12,14,35)">
+Pizza
+</div>
+
+<div class="menu-item"
+(click)="show('Samosa',150,8,4,18)">
+Samosa
+</div>
+
+<div class="menu-item"
+(click)="show('Fries',220,11,3,30)">
+Fries
+</div>
+
+
+<div class="nutrition-info">
+
+<h2>{{selectedName}}</h2>
+
+<p>Calories: {{calories}}</p>
+
+<p>Fat: {{fat}}</p>
+
+<p>Protein: {{protein}}</p>
+
+<p>Carbs: {{carbs}}</p>
+
+</div>
+
+</div><br><br>
+<button (click)="home()">Home</button>

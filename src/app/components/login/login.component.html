@@ -1,0 +1,74 @@
+<div class="login-container">
+
+    <form class="login-form">
+
+        <h1>Foodie Login 🍔</h1>
+
+        <input type="email" class="input"
+               placeholder="Email"
+               [(ngModel)]="email"
+               name="email">
+
+        <small *ngIf="showError && !email">
+            Email required
+        </small>
+
+        <input type="password" class="input"
+               placeholder="Password"
+               [(ngModel)]="password"
+               name="password">
+
+        <small *ngIf="showError && !password">
+            Password required
+        </small>
+
+        <!-- 🔴 ROLE SELECTION (NEW) -->
+        <div class="row" style="margin-top:10px;">
+            <label>
+                <input type="radio"
+                       name="role"
+                       value="user"
+                       [(ngModel)]="role">
+                User
+            </label>
+
+            <label style="margin-left:15px;">
+                <input type="radio"
+                       name="role"
+                       value="admin"
+                       [(ngModel)]="role">
+                Admin
+            </label>
+        </div>
+
+        <small *ngIf="showError && !role">
+            Please select role
+        </small>
+
+        <small *ngIf="invalid">
+            Invalid email or password
+        </small>
+
+        <div class="row">
+            <label>
+                <input type="checkbox">
+                Remember me
+            </label>
+
+            <span class="forgot">
+                Forgot password?
+            </span>
+        </div>
+
+        <button type="button" class="btn" (click)="login()">
+            Login
+        </button>
+
+        <p class="bottom">
+            Don't have account ?
+            <span (click)="register()">Register</span>
+        </p>
+
+    </form>
+
+</div>

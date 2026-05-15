@@ -1,0 +1,103 @@
+body{
+    margin:0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(135deg,#ff7a18,#ffb347);
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.register-container{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.register-form{
+
+    background:white;
+    padding:30px;
+    width:350px;
+    border-radius:10px;
+    box-shadow:0 0 15px rgba(0,0,0,0.2);
+    text-align:center;
+
+}
+
+h1{
+    margin-bottom:15px;
+    color:#ff5a00;
+}
+
+.input{
+
+    width:100%;
+    padding:10px;
+    margin:8px 0;
+    border-radius:5px;
+    border:1px solid #ccc;
+    font-size:14px;
+
+}
+
+.row{
+
+    display:flex;
+    gap:10px;
+
+}
+
+.row .input{
+
+    width:50%;
+
+}
+
+.terms{
+
+    text-align:left;
+    margin:10px 0;
+    font-size:14px;
+
+}
+
+.btn{
+
+    width:100%;
+    padding:10px;
+    background:#ff5a00;
+    color:white;
+    border:none;
+    border-radius:5px;
+    font-size:16px;
+    cursor:pointer;
+    transition:0.3s;
+
+}
+
+.btn:hover{
+
+    background:#e14d00;
+
+}
+
+.login-text{
+
+    margin-top:10px;
+    font-size:14px;
+
+}
+
+.login-text span{
+
+    color:#ff5a00;
+    cursor:pointer;
+    font-weight:bold;
+
+}
+small{
+    color: red;
+    font-family: bold;
+}

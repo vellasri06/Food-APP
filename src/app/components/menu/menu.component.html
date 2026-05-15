@@ -1,0 +1,934 @@
+<body>
+    <div class="container">
+
+        <h1>Delicious Menu</h1>
+        <div class="categories">
+            <button class="category-btn active" (click)="filter('All')">All</button>
+            <button class="category-btn" (click)="filter('Main')">Main Course</button>
+            <button class="category-btn" (click)="filter('Snacks')">Snacks</button>
+            <button class="category-btn" (click)="filter('Desserts')">Desserts</button>
+            <button class="category-btn" (click)="filter('Drinks')">Drinks</button>
+            <button class="category-btn" (click)="filter('Briyani')">Briyani</button>
+        </div>
+        <div class="searchBox">
+
+            <input type="text" class="input" placeholder="Search food, drinks, meals " [(ngModel)]="searchText">
+
+            <span class="icon">🔍</span>
+
+        </div>
+        <button *ngIf="isAdmin && lastDeletedItem" (click)="undoDelete()" style="background:orange; margin:10px;">
+            Undo Delete ({{lastDeletedItem}})
+        </button>
+        <div class="popup" *ngIf="showPopup">
+
+            <div class="popup" *ngIf="showPopup">
+
+                <div class="popup-content">
+
+                    <h2>{{selectedItem?.name}} Options</h2>
+                    <div *ngIf="selectedItem?.options?.length">
+                        <ng-container *ngFor="let opt of selectedItem.options">
+                            <div class="option" *ngIf="!deletedOptions[selectedItem.name]?.includes(opt.name)">
+
+                                <!-- IMAGE -->
+                                <img [src]="opt.img" class="img">
+
+                                <!-- TEXT (same as before, just extended) -->
+                                <span>
+                                    <span *ngIf="opt.type=='veg'">🟢</span>
+                                    <span *ngIf="opt.type=='nonveg'">🔴</span>
+
+                                    {{opt.name}} - ₹{{opt.price}}
+
+                                    <br>
+                                    ⭐ {{opt.rating}}
+                                </span>
+                                <button *ngIf="isAdmin"
+                                    (click)="deleteStaticOption(selectedItem.name, opt.name, $event)">
+                                    Delete
+                                </button>
+                                <!-- BUTTON -->
+                                <button (click)="addToCart(opt.name, opt.price)">
+                                    ADD
+                                </button>
+
+                            </div>
+                        </ng-container>
+                    </div>
+
+                    <button class="close-btn" (click)="showPopup=false">
+                        Close
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+        <!-- Menu Items -->
+        <div class="menu">
+            <div class="menu-item" (click)="openPopup('Shawarma')"
+                [hidden]="(selected!='All' && selected!='Main') || !'Shawarma'.toLowerCase().includes(searchText.toLowerCase())">
+                <button *ngIf="isAdmin" class="delete-btn" (click)="deleteStatic('Shawarma', $event)">
+                    Delete
+                </button>
+                <img src="https://tse4.mm.bing.net/th?id=OIP.O_36KDxDkOxsfoSpb5yzjQHaEK&pid=Api&P=0&h=180"
+                    alt="Shawarma">
+                <div class="item-info">
+                    <h3>Shawarma</h3>
+                    <p class="price">₹299</p>
+
+                    <div class="rating">
+                        ⭐ {{getRandomRating()}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item" (click)="openPopup('French Fries')"
+                [hidden]="(selected!='All' && selected!='Snacks') || !'French Fries'.toLowerCase().includes(searchText.toLowerCase())">
+                <button *ngIf="isAdmin" class="delete-btn" (click)="deleteStatic('Shawarma', $event)">
+                    Delete
+                </button>
+                <img src="https://goldenfingers.us/wp-content/uploads/2020/03/french_fry.jpg" alt="French Fries">
+                <div class="item-info">
+                    <h3>French Fries</h3>
+                    <p class="price">₹100</p>
+
+                    <div class="rating">
+                        ⭐ {{getRandomRating()}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item" (click)="openPopup('Chocolate Cake')"
+                [hidden]="selected!='All' && selected!='Desserts' || !'Chocolate Cake'.toLowerCase().includes(searchText.toLowerCase())">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxdjsHGOKAWHPRU-DRZ4a_-V2vBe1wIbtYVA&s"
+                    alt="Chocolate Cake">
+                <div class="item-info">
+                    <h3>Chocolate Cake</h3>
+                    <p class="price">₹50</p>
+
+                    <div class="rating">
+                        ⭐ {{getRandomRating()}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item" (click)="openPopup('Sprite')"
+                [hidden]="selected!='All' && selected!='Drinks' || !'Sprite'.toLowerCase().includes(searchText.toLowerCase())">
+                <img src="https://www.shutterstock.com/image-photo/mersin-turkey-04-15-2025-260nw-2614535115.jpg"
+                    alt="Sprite">
+                <div class="item-info">
+                    <h3>Sprite</h3>
+                    <p class="price">₹50</p>
+
+                    <div class="rating">
+                        ⭐ {{getRandomRating()}}
+                    </div>
+                </div>
+            </div>
+            <div class="menu-item" (click)="openPopup('Chicken Biryani')"
+                [hidden]="selected!='All' && selected!='Main' && selected!='Briyani' || !'Biryani'.toLowerCase().includes(searchText.toLowerCase())">
+                <img src="https://dww3ueizok6z0.cloudfront.net/food/banner/193-8e6f5c121411ff2b5a54143fa12a5d126973b2f0"
+                    alt="Biryani">
+                <div class="item-info">
+                    <h3>Chicken Biryani</h3>
+                    <p class="price">₹349</p>
+
+                    <div class="rating">
+                        ⭐ {{getRandomRating()}}
+                    </div>
+                </div>
+            </div>
+            <div class="menu-item"
+                [hidden]="selected!='All' && selected!='Main' || !'Fried Rice'.toLowerCase().includes(searchText.toLowerCase())"
+                (click)="openPopup('Fried Rice')">
+                <img src="https://www.sharmispassions.com/wp-content/uploads/2011/01/VegFriedRice2.jpg"
+                    alt="Fried Rice">
+                <div class="item-info">
+                    <h3>Fried Rice</h3>
+                    <p class="price">₹200</p>
+
+                    <div class="rating">
+                        ⭐ {{getRandomRating()}}
+                    </div>
+                </div>
+            </div>
+            <div class="menu-item"
+                [hidden]="selected!='All' && selected!='Snacks' || !'pizza'.toLowerCase().includes(searchText.toLowerCase())"
+                (click)="openPopup('pizza')">
+                <img src="https://www.engelvoelkers.com/wp-content/uploads/2014/07/pizza-stock.jpg" alt="Burger">
+                <div class="item-info">
+                    <h3>pizza</h3>
+                    <p class="price">₹199</p>
+
+                    <div class="rating">
+                        ⭐ {{getRandomRating()}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item"
+                [hidden]="selected!='All' && selected!='Main' || !'Chicken Hot Pie'.toLowerCase().includes(searchText.toLowerCase())"
+                (click)="openPopup('Chicken Hot Pie')">
+                <img src="https://www.cookingclassy.com/wp-content/uploads/2017/10/shortcut-chicken-pot-pie-8.jpg"
+                    alt="Chicken Hot Pie">
+                <div class="item-info">
+                    <h3>Chicken Hot Pie</h3>
+                    <p class="price">₹299</p>
+
+                    <div class="rating">
+                        ⭐ {{getRandomRating()}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item"
+                [hidden]="selected!='All' && selected!='Snacks' || !'Fried Chicken'.toLowerCase().includes(searchText.toLowerCase())"
+                (click)="openPopup('Fried Chicken')">
+                <img src="http://mda.bigoven.com/pics/buttermilk-fried-chicken-recipe-2.jpg" alt="Fried Chicken">
+                <div class="item-info">
+                    <h3>Fried Chicken</h3>
+                    <p class="price">₹249</p>
+
+                    <div class="rating">
+                        ⭐ {{getRandomRating()}}
+                    </div>
+                </div>
+            </div>
+            <div class="menu-item"
+                [hidden]="selected!='All' && selected!='Snacks' || !'Biscuits'.toLowerCase().includes(searchText.toLowerCase())"
+                (click)="openPopup('Biscuits')">
+                <img src="https://www.biscuitpeople.com/media/cache/platform_hq/1620019677_ededb6352a8135e773d7d437896c200f.jpg"
+                    alt="Meatloaf">
+                <div class="item-info">
+                    <h3>Biscuits</h3>
+                    <p class="price">₹15</p>
+
+                    <div class="rating">
+                        ⭐ {{getRandomRating()}}
+                    </div>
+                </div>
+            </div>
+            <div class="menu-item"
+                [hidden]="selected!='All' && selected!='Main' || !'Mashed Potatoes'.toLowerCase().includes(searchText.toLowerCase())"
+                (click)="openPopup('Mashed Potatoes')">
+                <img src="https://tse1.mm.bing.net/th?id=OIP.Il8lPZsnKLJzKkMRzZ8N_gHaFS&pid=Api&P=0&h=180"
+                    alt="Mashed Potatoes">
+                <div class="item-info">
+                    <h3>Mashed Potatoes</h3>
+                    <p class="price">₹149</p>
+
+                    <div class="rating">
+                        ⭐ {{getRandomRating()}}
+                    </div>
+                </div>
+            </div>
+            <div class="menu-item"
+                [hidden]="selected!='All' && selected!='Main' || !'Lasagna'.toLowerCase().includes(searchText.toLowerCase())"
+                (click)="openPopup('Lasagna')">
+                <img src="https://tse4.mm.bing.net/th?id=OIP.DRqjzszwlN77u2AjZTe-WQHaHa&pid=Api&P=0&h=180"
+                    alt="Lasagna">
+                <div class="item-info">
+                    <h3>Lasagna</h3>
+                    <p class="price">₹399</p>
+
+                    <div class="rating">
+                        ⭐ {{getRandomRating()}}
+                    </div>
+                </div>
+            </div>
+            <div class="menu-item"
+                [hidden]="selected!='All' && selected!='Main' || !'potato nuggets'.toLowerCase().includes(searchText.toLowerCase())"
+                (click)="openPopup('potato nuggets')">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRS5Ksi-w00BlHJcvFihcS1wp7ogFVKaSHOxQ&s"
+                    alt="Spaghetti and Meatballs">
+                <div class="item-info">
+                    <h3>potato nuggets </h3>
+                    <p class="price">₹299</p>
+
+                    <div class="rating">
+                        ⭐ {{getRandomRating()}}
+                    </div>
+                </div>
+            </div>
+            <div class="menu-item"
+                [hidden]="selected!='All' && selected!='Snacks' || !'Classic Cheese Burger'.toLowerCase().includes(searchText.toLowerCase())"
+                (click)="openPopup('burger')">
+                <img src="https://tse3.mm.bing.net/th?id=OIP.y5CYrhnDFf6FbzCw7pCVWgHaE8&pid=Api&P=0&h=180"
+                    alt="Classic Cheese Burger">
+                <div class="item-info">
+                    <h3>Classic Cheese Burger</h3>
+                    <p class="price">₹199</p>
+
+                    <div class="rating">
+                        ⭐ {{getRandomRating()}}
+                    </div>
+                </div>
+            </div>
+            <div class="menu-item"
+                [hidden]="selected!='All' && selected!='Snacks' || !'Alfredo Pasta'.toLowerCase().includes(searchText.toLowerCase())"
+                (click)="openPopup('Alfredo Pasta')">
+                <img src="https://www.sharmispassions.com/wp-content/uploads/2015/12/alfredopasta5-500x500.jpg"
+                    alt="Mac and Cheese">
+                <div class="item-info">
+                    <h3>Alfredo Pasta</h3>
+                    <p class="price">₹249</p>
+
+                    <div class="rating">
+                        ⭐ {{getRandomRating()}}
+                    </div>
+                </div>
+            </div>
+            <div class="menu-item"
+                [hidden]="selected!='All' && selected!='Snacks' || !'Samosa'.toLowerCase().includes(searchText.toLowerCase())"
+                (click)="openPopup('Samosa')">
+                <img src="https://www.shutterstock.com/image-photo/fried-samosas-vegetable-filling-popular-260nw-2159316021.jpg"
+                    alt="Samosa">
+                <div class="item-info">
+                    <h3>Samosa</h3>
+                    <p class="price">₹20</p>
+
+                    <div class="rating">
+                        ⭐ {{getRandomRating()}}
+                    </div>
+                </div>
+            </div>
+            <div class="menu-item"
+                [hidden]="selected!='All' && selected!='Snacks' || !'Kurkure Packets'.toLowerCase().includes(searchText.toLowerCase())"
+                (click)="addToCart('Kurkure Packets',20)">
+                <img src="https://5.imimg.com/data5/SELLER/Default/2022/7/FB/MY/UM/122190343/1649098586085-sku-0177-0.jpg"
+                    alt="Kurkure Packets">
+                <div class="item-info">
+                    <h3>Kurkure Packets</h3>
+                    <p class="price">₹30</p>
+
+                    <div class="rating">
+                        ⭐ {{getRandomRating()}}
+                    </div>
+                </div>
+            </div>
+            <div class="menu-item"
+                [hidden]="selected!='All' && selected!='Snacks' || !'Puff'.toLowerCase().includes(searchText.toLowerCase())"
+                (click)="openPopup('Puff')">
+                <img src="https://tse2.mm.bing.net/th?id=OIP.R1Yonl1euQiedfJT7qOYawHaHa&pid=Api&P=0&h=180" alt="Pough">
+                <div class="item-info">
+                    <h3>Puff</h3>
+                    <p class="price">₹20</p>
+
+                    <div class="rating">
+                        ⭐ {{getRandomRating()}}
+                    </div>
+                </div>
+            </div>
+            <div class="menu-item"
+                [hidden]="selected!='All' && selected!='Snacks' || !'Nachos'.toLowerCase().includes(searchText.toLowerCase())"
+                (click)="openPopup('Nachos')">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlDXuLc0ScaYf5wQLTvHc5svWRuotqG_G_Cg&s"
+                    alt="Nachos">
+                <div class="item-info">
+                    <h3>Nachos</h3>
+                    <p class="price">₹179</p>
+
+                    <div class="rating">
+                        ⭐ {{getRandomRating()}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item"
+                [hidden]="selected!='All' && selected!='Desserts' || !'Ice Cream'.toLowerCase().includes(searchText.toLowerCase())"
+                (click)="openPopup('Ice Cream')">
+                <img src="https://static.india.com/wp-content/uploads/2023/05/ice-cream-3611698_1280.jpg?impolicy=Medium_Resize&w=1200&h=800"
+                    alt="Ice Cream">
+                <div class="item-info">
+                    <h3>Ice Cream</h3>
+                    <p class="price">₹70</p>
+
+                    <div class="rating">
+                        ⭐ {{getRandomRating()}}
+                    </div>
+                </div>
+            </div>
+            <!-- Drinks -->
+            <div class="menu-item"
+                [hidden]="selected!='All' && selected!='Drinks' || !'Soda'.toLowerCase().includes(searchText.toLowerCase())"
+                (click)="openPopup('Soda')">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThPCuakXVq9i6Y9CN13B-wCwTK6WahRjltng&s"
+                    alt="Soda">
+                <div class="item-info">
+                    <h3>Soda</h3>
+                    <p class="price">₹30</p>
+
+                    <div class="rating">
+                        ⭐ {{getRandomRating()}}
+                    </div>
+                </div>
+            </div>
+            <div class="menu-item"
+                [hidden]="selected!='All' && selected!='Drinks' || !'Coffee'.toLowerCase().includes(searchText.toLowerCase())"
+                (click)="openPopup('Coffee')">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTH-ZIobq8RxBro_CYrwSP90Ym7NGwcOOmHTg&s"
+                    alt="Coffee">
+                <div class="item-info">
+                    <h3>Coffee</h3>
+                    <p class="price">₹10</p>
+
+                    <div class="rating">
+                        ⭐ {{getRandomRating()}}
+                    </div>
+                </div>
+            </div>
+            <div class="menu-item"
+                [hidden]="selected!='All' && selected!='Drinks' || !'ThumsUp'.toLowerCase().includes(searchText.toLowerCase())"
+                (click)="addToCart('ThumbsUp',25)">
+                <img src="https://tse2.mm.bing.net/th?id=OIP.ch304rWuEWT9sCZ3UxHguAHaII&pid=Api&P=0&h=180"
+                    alt="ThumbsUp">
+                <div class="item-info">
+                    <h3>ThumbsUp</h3>
+                    <p class="price">₹50</p>
+
+                    <div class="rating">
+                        ⭐ {{getRandomRating()}}
+                    </div>
+                </div>
+            </div>
+            <div class="menu-item"
+                [hidden]="selected!='All' && selected!='Snacks' || !'Panipuri'.toLowerCase().includes(searchText.toLowerCase())"
+                (click)="openPopup('Panipuri')">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBIEkjFHJFxe3pjU9IooFnr9gI3SUZHsn1jA&s"
+                    alt="ThumbsUp">
+                <div class="item-info">
+                    <h3>PaniPuri</h3>
+                    <p class="price">₹20</p>
+
+                    <div class="rating">
+                        ⭐ {{getRandomRating()}}
+                    </div>
+                </div>
+            </div>
+            <div class="menu-item"
+                [hidden]="selected!='All' && selected!='Snacks' || !'Pavbaji'.toLowerCase().includes(searchText.toLowerCase())"
+                (click)="openPopup('Pavbaji')">
+                <img src="https://i0.wp.com/ahappytreat.com/wp-content/uploads/2017/04/DSC_0287_new-2.jpg?fit=6000%2C4000&ssl=1"
+                    alt="ThumbsUp">
+                <div class="item-info">
+                    <h3>PavBaji</h3>
+                    <p class="price">₹50</p>
+
+                    <div class="rating">
+                        ⭐ {{getRandomRating()}}
+                    </div>
+                </div>
+            </div>
+            <div class="menu-item"
+                [hidden]="selected!='All' && selected!='Main'  && selected!='Briyani'|| !'Mutton'.toLowerCase().includes(searchText.toLowerCase())"
+                (click)="openPopup('Mutton')">
+                <img src="https://blog.railrestro.com/wp-content/uploads/2016/07/Briyani-ordering-in-Train-1024x683.jpg"
+                    alt="ThumbsUp">
+                <div class="item-info">
+                    <h3>Mutton Biryani</h3>
+                    <p class="price">₹350</p>
+
+
+                    <div class="rating">
+                        ⭐ {{getRandomRating()}}
+                    </div>
+                </div>
+            </div>
+            <div class="menu-item"
+                [hidden]="selected!='All' && selected!='Main'  && selected!='Briyani'|| !'veg'.toLowerCase().includes(searchText.toLowerCase())"
+                (click)="openPopup('Veg Biryani')">
+                <img src="https://www.madhuseverydayindian.com/wp-content/uploads/2022/11/easy-vegetable-biryani.jpg"
+                    alt="ThumbsUp">
+                <div class="item-info">
+                    <h3>Veg Briyani</h3>
+                    <p class="price">₹150</p>
+
+
+                    <div class="rating">
+                        ⭐ {{getRandomRating()}}
+                    </div>
+                </div>
+            </div>
+            <div class="menu-item"
+                [hidden]="selected!='All' && selected!='Desserts' || !'Lava'.toLowerCase().includes(searchText.toLowerCase())"
+                (click)="openPopup('Lava')">
+                <img src="https://www.wearetateandlylesugars.com/wp-content/uploads/sites/2/2023/07/Chocolate-Lava-Cake-500-x-400_1.png"
+                    alt="ThumbsUp">
+                <div class="item-info">
+                    <h3>Lava Cake</h3>
+                    <p class="price">₹250</p>
+
+                    <div class="rating">
+                        ⭐ {{getRandomRating()}}
+                    </div>
+                </div>
+            </div>
+            <div class="menu-item"
+                [hidden]="selected!='All' && selected!='Snacks' || !'Waffle'.toLowerCase().includes(searchText.toLowerCase())"
+                (click)="openPopup('Waffle')">
+                <img src="https://i.pinimg.com/236x/5b/7d/42/5b7d42036ef8eb1f8ba146da6cb1cca3.jpg" alt="ThumbsUp">
+                <div class="item-info">
+                    <h3>Waffle</h3>
+                    <p class="price">₹250</p>
+
+                    <div class="rating">
+                        ⭐ {{getRandomRating()}}
+                    </div>
+                </div>
+            </div>
+            <div class="menu-item"
+                [hidden]="selected!='All' && selected!='Desserts' || !'Tiramisu'.toLowerCase().includes(searchText.toLowerCase())"
+                (click)="openPopup('Tiramisu')">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNv8rroBU5LwTf6WllSwt3_FlzzN1Qs_WTDg&s"
+                    alt="ThumbsUp">
+                <div class="item-info">
+                    <h3>Tiramisu</h3>
+                    <p class="price">₹500</p>
+                    <div class="rating">
+                        ⭐ {{getRandomRating()}}
+                    </div>
+                </div>
+            </div>
+            <div class="menu-item"
+                [hidden]="selected!='All' && selected!='Desserts' || !'Pudding'.toLowerCase().includes(searchText.toLowerCase())"
+                (click)="openPopup('Pudding')">
+                <img src="https://www.recipetineats.com/tachyon/2025/09/Panna-cotta_8-close-up.jpg?resize=747%2C747"
+                    alt="ThumbsUp">
+                <div class="item-info">
+                    <h3>Milk Pudding</h3>
+                    <p class="price">₹50</p>
+
+                    <div class="rating">
+                        ⭐ {{getRandomRating()}}
+                    </div>
+                </div>
+            </div>
+            <div class="menu-item"
+                [hidden]="selected!='All' && selected!='Desserts' || !'Choco'.toLowerCase().includes(searchText.toLowerCase())"
+                (click)="openPopup('Choco')">
+                <img src="https://www.southernliving.com/thmb/HqyaJl9fD_qpIyTCRKYrIn8yCKI=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Southern_Living_Dirt_Pudding_SEO48-Beauty-01-copy-1215ebfd9cc044648deb77e69e80ad42.jpg"
+                    alt="ThumbsUp">
+                <div class="item-info">
+                    <h3>Choco</h3>
+                    <p class="price">₹320</p>
+
+                    <div class="rating">
+                        ⭐ {{getRandomRating()}}
+                    </div>
+                </div>
+            </div>
+            <div class="menu-item"
+                [hidden]="selected!='All' && selected!='Desserts' || !'Macrons'.toLowerCase().includes(searchText.toLowerCase())"
+                (click)="openPopup('Macrons')">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwGcKvgTJEQsbbHf1AzhMck5MxQi2TwD4HsA&s0"
+                    alt="ThumbsUp">
+                <div class="item-info">
+                    <h3>Macrons</h3>
+                    <p class="price">₹550</p>
+                    <div class="rating">
+                        ⭐ {{getRandomRating()}}
+                    </div>
+                </div>
+            </div>
+            <div class="menu-item"
+                [hidden]="selected!='All' && selected!='Drinks' || !'Mojithos'.toLowerCase().includes(searchText.toLowerCase())"
+                (click)="openPopup('Mojithos')">
+                <img src="https://www.beanilla.com/wp/wp-content/uploads/2022/06/RefreshingDrinks-1024x683.jpg"
+                    alt="ThumbsUp">
+                <div class="item-info">
+                    <h3>Mojitho</h3>
+                    <p class="price">₹150</p>
+
+                    <div class="rating">
+                        ⭐ {{getRandomRating()}}
+                    </div>
+                </div>
+            </div>
+            <div class="menu-item"
+                [hidden]="selected!='All' && selected!='Snacks' || !'Maggie'.toLowerCase().includes(searchText.toLowerCase())"
+                (click)="openPopup('Maggie')">
+                <img src="https://5.imimg.com/data5/XG/IR/GLADMIN-60795231/maggie-500x500.png" alt="ThumbsUp">
+                <div class="item-info">
+                    <h3>Maggie</h3>
+                    <p class="price">₹50</p>
+
+                    <div class="rating">
+                        ⭐ {{getRandomRating()}}
+                    </div>
+                </div>
+            </div>
+            <div class="menu-item"
+                [hidden]="selected!='All' && selected!='Snacks' || !'Lays'.toLowerCase().includes(searchText.toLowerCase())"
+                (click)="openPopup('Lays')">
+                <img src="https://www.allrecipes.com/thmb/oTJcQ7-Yc4QLP3soM0cnCjlbVtE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/ar-lays-taste-test-group-2x1-39ab5d565b9543939804683eebec2ec4.jpg"
+                    alt="ThumbsUp">
+                <div class="item-info">
+                    <h3>Lays</h3>
+                    <p class="price">₹20</p>
+
+                    <div class="rating">
+                        ⭐ {{getRandomRating()}}
+                    </div>
+                </div>
+            </div>
+            <div class="menu-item"
+                [hidden]="selected!='All' && selected!='Drinks' || !'WaterBottle'.toLowerCase().includes(searchText.toLowerCase())"
+                (click)="openPopup('Water Bottle')">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT62CHkobeuDNMpOtQ1ENlMnRsuNgWeKnFIfA&s"
+                    alt="ThumbsUp">
+                <div class="item-info">
+                    <h3>Water Bottle</h3>
+                    <p class="price">₹20</p>
+
+                    <div class="rating">
+                        ⭐ {{getRandomRating()}}
+                    </div>
+                </div>
+            </div>
+            <div class="menu-item"
+                [hidden]="selected!='All' && selected!='Main' || !'Paneer Tikka'.toLowerCase().includes(searchText.toLowerCase())"
+                (click)="openPopup('Paneer Tikka')">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR05YUuPyqT5AQi5YQwwOv7n20lU7-M6BVj8Q&s">
+                <div class="item-info">
+                    <h3>Paneer Tikka</h3>
+                    <p class="price">₹220</p>
+
+                    <div class="rating">
+                        ⭐ {{getRandomRating()}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item"
+                [hidden]="selected!='All' && selected!='Main' || !'Butter Chicken'.toLowerCase().includes(searchText.toLowerCase())"
+                (click)="openPopup('Butter Chicken')">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsdHbLpoZ41iDhrAmMy7KT0OX3sgHek0FWwg&s">
+                <div class="item-info">
+                    <h3>Butter Chicken</h3>
+                    <p class="price">₹320</p>
+
+                    <div class="rating">
+                        ⭐ {{getRandomRating()}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item"
+                [hidden]="selected!='All' && selected!='Main' || !'Veg Pulao'.toLowerCase().includes(searchText.toLowerCase())"
+                (click)="openPopup('Veg Pulao')">
+                <img
+                    src="https://i.ytimg.com/vi/AYkSNH5Sj4M/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLBg-8ePE68YsFXI7LmAWrCInHTBcA">
+                <div class="item-info">
+                    <h3>Veg Pulao</h3>
+                    <p class="price">₹180</p>
+
+                    <div class="rating">
+                        ⭐ {{getRandomRating()}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item"
+                [hidden]="selected!='All' && selected!='Snacks'  || !'Spring Rolls'.toLowerCase().includes(searchText.toLowerCase())"
+                (click)="openPopup('Spring Rolls')">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRF_Id_UBORam9yoMjPnp5oBbaZmyu79h0nvA&s">
+                <div class="item-info">
+                    <h3>Spring Rolls</h3>
+                    <p class="price">₹140</p>
+
+                    <div class="rating">
+                        ⭐ {{getRandomRating()}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item"
+                [hidden]="selected!='All' && selected!='Snacks' || !'Onion Pakoda'.toLowerCase().includes(searchText.toLowerCase())"
+                (click)="openPopup('Pakoda')">
+                <img
+                    src="https://silkroadrecipes.com/wp-content/uploads/2021/12/Onion-Pakora-Indian-Fritters-square.jpg">
+                <div class="item-info">
+                    <h3>Pakoda</h3>
+                    <p class="price">₹60</p>
+
+                    <div class="rating">
+                        ⭐ {{getRandomRating()}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item"
+                [hidden]="selected!='All' && selected!='Snacks' || !'Veg Sandwich'.toLowerCase().includes(searchText.toLowerCase())"
+                (click)="openPopup('Sandwich')">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGMKFf6LDt0WP5IwIxZ-y64Pmu4KfEXpxl0Q&s">
+                <div class="item-info">
+                    <h3>Sandwich</h3>
+                    <p class="price">₹90</p>
+
+                    <div class="rating">
+                        ⭐ {{getRandomRating()}}
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="menu-item"
+                [hidden]="selected!='All' && selected!='Desserts' || !'Gulab Jamun'.toLowerCase().includes(searchText.toLowerCase())"
+                (click)="addToCart('Gulab Jamun',15)">
+                <img
+                    src="https://i0.wp.com/www.chitrasfoodbook.com/wp-content/uploads/2016/10/gulab-jamun-using-mix.jpg?w=1200&ssl=1">
+                <div class="item-info">
+                    <h3>Gulab Jamun</h3>
+                    <p class="price">₹70</p>
+
+                    <div class="rating">
+                        ⭐ {{getRandomRating()}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item"
+                [hidden]="selected!='All' && selected!='Desserts' || !'Rasgulla'.toLowerCase().includes(searchText.toLowerCase())"
+                (click)="addToCart('Rasgulla',80)">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTseOTMOPjrpmrEfq-eCo7lw09-vpvMxRHrpg&s">
+                <div class="item-info">
+                    <h3>Rasgulla</h3>
+                    <p class="price">₹80</p>
+                    <div class="rating">
+                        ⭐ {{getRandomRating()}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item"
+                [hidden]="selected!='All' && selected!='Desserts' || !'Brownie'.toLowerCase().includes(searchText.toLowerCase())"
+                (click)="openPopup('Brownie')">
+                <img src="https://i.pinimg.com/736x/22/d0/2c/22d02c3cbb0b2ba46f0089b6c94821fa.jpg">
+                <div class="item-info">
+                    <h3>Brownie</h3>
+                    <p class="price">₹120</p>
+                    <div class="rating">
+                        ⭐ {{getRandomRating()}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item"
+                [hidden]="selected!='All' && selected!='Desserts' || !'Cupcake'.toLowerCase().includes(searchText.toLowerCase())"
+                (click)="openPopup('Cupcake')">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFjKGUMra2IrMVOJI1SWf3VC9h0FAPF1c4lA&s">
+                <div class="item-info">
+                    <h3>Cupcake</h3>
+                    <p class="price">₹90</p>
+                    <div class="rating">
+                        ⭐ {{getRandomRating()}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item"
+                [hidden]="selected!='All' && selected!='Drinks' || !'Tea'.toLowerCase().includes(searchText.toLowerCase())"
+                (click)="addToCart('Tea',15)">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkXhe9_Ml2shXunpKxftYmfq4r6WSfU2ovJQ&s">
+                <div class="item-info">
+                    <h3>Tea</h3>
+                    <p class="price">₹15</p>
+                    <div class="rating">
+                        ⭐ {{getRandomRating()}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item"
+                [hidden]="selected!='All' && selected!='Drinks' || !'Mango Juice'.toLowerCase().includes(searchText.toLowerCase())"
+                (click)="openPopup('Mango Juice')">
+                <img src="https://miro.medium.com/v2/resize:fit:1400/1*YEvGeOTWYgIcyv89lCen8Q.jpeg">
+                <div class="item-info">
+                    <h3>Mango Juice</h3>
+                    <p class="price">₹60</p>
+
+                    <div class="rating">
+                        ⭐ {{getRandomRating()}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item"
+                [hidden]="selected!='All' && selected!='Drinks' || !'Lassi'.toLowerCase().includes(searchText.toLowerCase())"
+                (click)="openPopup('Lassi')">
+                <img src="https://themagicsaucepan.com/wp-content/uploads/2018/05/20180511-salt-lassi-0061-500x500.jpg">
+                <div class="item-info">
+                    <h3>Lassi</h3>
+                    <p class="price">₹50</p>
+
+                    <div class="rating">
+                        ⭐ {{getRandomRating()}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item"
+                [hidden]="selected!='All' && selected!='Main' || !'Chicken Curry'.toLowerCase().includes(searchText.toLowerCase())"
+                (click)="openPopup('Chicken Curry')">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2hY23iTa2KYCPCkNWsk-AhAMbE4sqKLfAFQ&s">
+                <div class="item-info">
+                    <h3>Chicken Curry</h3>
+                    <p class="price">₹260</p>
+
+                    <div class="rating">
+                        ⭐ {{getRandomRating()}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item"
+                [hidden]="selected!='All' && selected!='Main' || !'Fish Fry'.toLowerCase().includes(searchText.toLowerCase())"
+                (click)="openPopup('Fish Fry')">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTg_jkRBlV-TQjXn56fggbgbgi4_j9H2kNmcQ&s">
+                <div class="item-info">
+                    <h3>Fish Fry</h3>
+                    <p class="price">₹240</p>
+                    <div class="rating">
+                        ⭐ {{getRandomRating()}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item"
+                [hidden]="selected!='All' && selected!='Snacks' || !'Popcorn'.toLowerCase().includes(searchText.toLowerCase())"
+                (click)="openPopup('Popcorn')">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJbbQcLkkLTbSnXcHeTWv_Xe5p3g_GJTkmnA&s">
+                <div class="item-info">
+                    <h3>Popcorn</h3>
+                    <p class="price">₹80</p>
+                    <div class="rating">
+                        ⭐ {{getRandomRating()}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item"
+                [hidden]="selected!='All' && selected!='Snacks' || !'Noodles'.toLowerCase().includes(searchText.toLowerCase())"
+                (click)="openPopup('Noodles')">
+                <img
+                    src="https://i.ytimg.com/vi/jnJ2N32MW50/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLCcllvPwDDnn3fMkun5m6qVzAq_hw">
+                <div class="item-info">
+                    <h3>Noodles</h3>
+                    <p class="price">₹150</p>
+
+                    <div class="rating">
+                        ⭐ {{getRandomRating()}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item"
+                [hidden]="selected!='All' && selected!='Desserts' || !'Ice Cream Sundae'.toLowerCase().includes(searchText.toLowerCase())"
+                (click)="openPopup('Ice Cream Sundae')">
+                <img
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/StrawberrySundae.jpg/250px-StrawberrySundae.jpg">
+                <div class="item-info">
+                    <h3>Ice Cream Sundae</h3>
+                    <p class="price">₹130</p>
+                    <div class="rating">
+                        ⭐ {{getRandomRating()}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item"
+                [hidden]="selected!='All' && selected!='Main' || !'Chapathi'.toLowerCase().includes(searchText.toLowerCase())"
+                (click)="openPopup('Chapathi')">
+                <img
+                    src="https://thumbs.dreamstime.com/z/chapathi-flat-bread-curry-common-staple-indian-subcontinent-as-well-amongst-expatriates-throughout-world-195902202.jpg">
+                <div class="item-info">
+                    <h3>Chapathi</h3>
+                    <p class="price">₹40</p>
+                    <div class="rating">
+                        ⭐ {{getRandomRating()}}
+                    </div>
+                </div>
+            </div>
+            <div class="menu-item" *ngFor="let item of menuItems" (click)="openPopup(item.name, $event)">
+
+                <img [src]="item.img">
+
+                <div class="item-info">
+
+                    <h3>{{item.name}}</h3>
+
+                    <p class="price" *ngIf="item.stock > 0; else outStock">
+                        ₹{{item.price}}
+                    </p>
+
+                    <ng-template #outStock>
+                        <span style="color:red">Not Available ❌</span>
+                    </ng-template>
+
+                    <!-- 🔴 DELETE BUTTON (ADMIN) -->
+                    <button *ngIf="isAdmin" class="delete-btn" (click)="deleteItem(item.id, $event)">
+                        Delete
+                    </button>
+
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="cart">
+
+            <h2>Your Cart</h2>
+
+            <ul id="cartItems" class="cart-items">
+
+                <li *ngFor="let i of cs.cart; let p=index">
+
+                    <span class="name">
+                        {{i.name}}
+                    </span>
+
+                    <span class="price">
+                        ₹{{i.price}}
+                    </span>
+
+                    <span class="qty">
+
+                        <button class="minus" (click)="sub(i.name,i.price)">
+                            -
+                        </button>
+
+                        {{i.qty}}
+
+                        <button class="plus" (click)="addit(i.name,i.price)">
+                            +
+                        </button>
+
+                    </span>
+
+                    <button (click)="cs.remove(p)" class="remo">
+                        Remove
+                    </button>
+
+                </li>
+
+            </ul>
+
+            <div id="totalCost" class="total">
+                Total: ₹{{cs.total}}
+            </div>
+
+            <button class="delivery-btn" (click)="proceedToCart()">
+                Proceed to Checkout
+            </button>
+            <button class="delivery-btn" (click)="back()">
+                Back
+            </button>
+
+        </div>
+
+    </div>
+</body>
